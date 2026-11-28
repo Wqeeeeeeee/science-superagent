@@ -1,0 +1,42 @@
+{
+  "budget": 10,
+  "tasks": [
+    {
+      "version": 1,
+      "id": "detached",
+      "kind": "compute",
+      "depends_on": [],
+      "resource": "synthetic-compute",
+      "executor": "auto",
+      "attempts": 2,
+      "timeout_s": 10,
+      "description": "Run a detached digest job."
+    },
+    {
+      "version": 1,
+      "id": "process",
+      "kind": "statistics",
+      "depends_on": [
+        "detached"
+      ],
+      "resource": "synthetic-python",
+      "executor": "auto",
+      "attempts": 4,
+      "timeout_s": 4,
+      "description": "Normalize a small integer dataset and compute exact metrics."
+    },
+    {
+      "version": 1,
+      "id": "verify",
+      "kind": "statistics",
+      "depends_on": [
+        "process"
+      ],
+      "resource": "synthetic-python",
+      "executor": "auto",
+      "attempts": 1,
+      "timeout_s": 4,
+      "description": "Confirm the metrics in an independent attempt directory."
+    }
+  ]
+}
